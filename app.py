@@ -1,15 +1,16 @@
 from flask import Flask
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from security import authenticate,identity
-from user import UserRegister
-from item import Item,ItemList
+from resources.user import UserRegister
+from resources.item import Item,ItemList
 
 
 app=Flask(__name__)
+app.secret_key='jose'
 api=Api(app)
 
-jwt=JWT(app,authenticate,identity)
+jwt=JWTManager(app)
 
 api.add_resource(Item,'/items/<string:name>')
 api.add_resource(ItemList,'/items')
